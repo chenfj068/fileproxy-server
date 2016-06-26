@@ -1,5 +1,6 @@
 package org.tiger.ant.file;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,10 +10,12 @@ import java.util.concurrent.locks.ReentrantLock;
 import org.sql2o.Connection;
 import org.sql2o.Query;
 import org.sql2o.Sql2o;
+import org.tiger.ant.AntLogger;
 import org.tiger.ant.ServerConfig;
 import org.tiger.ant.file.dao.DAL;
 import org.tiger.ant.file.dao.SQL;
 import org.tiger.ant.util.FileStoreUtil;
+import org.tiger.ant.util.JsonUtil;
 
 public class FileManagerImpl implements FileManager {
 
@@ -68,7 +71,11 @@ public class FileManagerImpl implements FileManager {
           DAL.saveOrUpdateFileConsume(consume, conn);
         }
         conn.commit();
+        try {
+          AntLogger.logger().debug("save received file[" + JsonUtil.toJson(meta) + "]");
+        } catch (IOException e) {
 
+        }
 
       }
 
@@ -95,6 +102,7 @@ public class FileManagerImpl implements FileManager {
     try {
       lock.lock();
       if (this.upstreamList.size() == 0) {
+
         List<FileUpstream> list = DAL.queryFileUpstreamByStatus(FileUpstream.NOT_UPSTREAM);
         if (list.size() > 0)
           upstreamList.addAll(list);

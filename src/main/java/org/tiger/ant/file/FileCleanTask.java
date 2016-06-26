@@ -20,14 +20,14 @@ public class FileCleanTask implements Runnable {
 
   @Override
   public void run() {
-    Calendar now =Calendar.getInstance();
-    now.add(Calendar.MINUTE, -1*ServerConfig.getInstance().getFileTTL());
-    Date t=now.getTime();
+ 
     AntLogger.logger().info("file clan begin");
     List<FileInfo> fileList=Collections.EMPTY_LIST;
     do{
+      Calendar now =Calendar.getInstance();
+      now.add(Calendar.MINUTE, -1*ServerConfig.getInstance().getFileTTL());
+      Date t=now.getTime();
       fileList = fileManager.getFileInfoByUpTimeLessThan(t,200);
-
       AntLogger.logger().info("fetch clean fileinfo "+fileList.size());
       for (FileInfo fileInfo : fileList) {
         try {
@@ -38,6 +38,11 @@ public class FileCleanTask implements Runnable {
         } catch (Exception e) {
           e.printStackTrace();
         }
+      }
+      try {
+        Thread.sleep(200);
+      } catch (InterruptedException e) {
+        return;
       }
     }while(fileList.size()>0);
     

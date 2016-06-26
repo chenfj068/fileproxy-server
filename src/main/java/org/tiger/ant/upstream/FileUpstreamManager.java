@@ -4,14 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import org.tiger.ant.AntLogger;
 import org.tiger.ant.ProxyConfig;
 import org.tiger.ant.ServerConfig;
 import org.tiger.ant.client.FileConnection;
-import org.tiger.ant.file.FileCleanTask;
 import org.tiger.ant.file.FileManager;
 import org.tiger.ant.file.FileUpstream;
 import org.tiger.ant.util.JsonUtil;
@@ -35,6 +32,7 @@ public class FileUpstreamManager{
       UpStreamWorker worker = new UpStreamWorker();
       ex.submit(worker);
     }
+    AntLogger.logger().debug("fileupstream manager started with "+threadCount+" thread");
   }
 
   public void stop() {
@@ -61,12 +59,15 @@ public class FileUpstreamManager{
           File file = new File(fm.getPath());
           if(!file.exists()){
             AntLogger.logger().warn("upstream file not exists ["+JsonUtil.toJson(fm)+"]");
-            Thread.sleep(20);
+            fileManager.onFileUpstreamSuccess(fm);
+            Thread.sleep(5);
+            continue;
           }
           if(fm.getType().equals(this.lastType)&&this.fileConnection!=null){
             try{
             fileConnection.sendFile(fm.getType(), new File(fm.getPath()), true);
             fileManager.onFileUpstreamSuccess(fm);
+            AntLogger.logger().debug("upstream fileupstream success["+JsonUtil.toJson(fm)+"]");
             }catch(IOException ioe){
               AntLogger.logger().error("upstream failed ["+fm.getPath()+"->"+lastHost+"]");
               fileConnection.close();
@@ -93,6 +94,7 @@ public class FileUpstreamManager{
             try{
             fileConnection.sendFile(fm.getType(), new File(fm.getPath()), true);
             fileManager.onFileUpstreamSuccess(fm);
+            AntLogger.logger().debug("upstream fileupstream success["+JsonUtil.toJson(fm)+"]");
             }catch(IOException ioe){
               AntLogger.logger().error("upstream failed ["+fm.getPath()+"->"+lastHost+"]");
               fileConnection.close();

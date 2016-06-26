@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<OSS xmlns="http://www.w3school.com.cn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<!-- 需要初始化的OSSClient配置信息 -->
+	<POINTS>
+		<!-- pointKey:获取Clie -->
+		<POINT pointKey="SHANGHAI">
+			<ENDPOINT>[your ENDPOINT]</ENDPOINT>
+			<ACCESSKEY>[your ACCESSKEY]</ACCESSKEY>
+			<KEYSECRET>[your KEYSECRET]</KEYSECRET>
+			<BUCKETS>
+				<!-- Bucket配置，通过pointKey+bucketKey获取 -->
+				<BUCKET bucketKey="cdn">cdnrepo</BUCKET>
+				<BUCKET bucketKey="store">permrepo</BUCKET>
+				<BUCKET bucketKey="source">rsuerepo</BUCKET>
+			</BUCKETS>
+		</POINT>
+	</POINTS>
+</OSS>

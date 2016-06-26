@@ -1,0 +1,8 @@
+{
+   "workdir":"/Users/tiger/ttt2",
+   "mode":0,
+   "port":9000,
+   "ip":"127.0.0.1",
+   "fileTTL":5,
+   "dbDir":"/Users/tiger/codespace/workspace/ant/db"
+}

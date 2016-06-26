@@ -1,0 +1,19 @@
+{
+   "upstream_servers":[
+      {
+         "group_name":"group1",
+         "servers":"127.0.0.1:9001"
+      }
+   ],
+   "proxy_list":[
+      {
+         "type":"ngixnx",
+          "server_group":"group1"
+      },
+      {
+         "type":"type3,type4",
+         "server_group":"group1"
+      }
+   ],
+   "upstream_thread_number":10
+}

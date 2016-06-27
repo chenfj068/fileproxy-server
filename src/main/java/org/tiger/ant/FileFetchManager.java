@@ -15,6 +15,7 @@ import org.tiger.ant.file.FileManager;
 import org.tiger.ant.file.FileMeta;
 import org.tiger.ant.msg.FileFetchRequest;
 import org.tiger.ant.util.FileCheckSumUtil;
+import org.tiger.ant.util.FileStoreUtil;
 import org.tiger.ant.util.JsonUtil;
 
 public class FileFetchManager {
@@ -65,6 +66,7 @@ public class FileFetchManager {
       meta.setFtype(consume.getType());
       meta.setLength(file.length());
       meta.setFileName(file.getName());
+      meta.setDistDir(FileStoreUtil.getDistDir(consume.getPath(), consume.getType()));
       String json = JsonUtil.toJson(meta);
       byte meta_bytes[] = json.getBytes();
       in = new FileInputStream(file);

@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.tiger.ant.file.FileConsume;
-import org.tiger.ant.file.FileManager;
 import org.tiger.ant.msg.FileFetchRequest;
 import org.tiger.ant.msg.FileReceiveStatus;
 import org.tiger.ant.util.JsonUtil;
@@ -81,8 +80,9 @@ public class FileFetchHandler extends ChannelInboundHandlerAdapter {
     if (consume != null) {
       fetchManager.fileReceiveFailed(consume);
       AntLogger.logger().error("file consume failed[" + JsonUtil.toJson(this.consume) + "]");
+      consume=null;
     }
-    // cause.printStackTrace();
+    cause.printStackTrace();
     ctx.channel().close();
     ctx.close();
 
@@ -96,8 +96,10 @@ public class FileFetchHandler extends ChannelInboundHandlerAdapter {
     if (consume != null) {
       fetchManager.fileReceiveFailed(consume);
       AntLogger.logger().error("file consume failed[" + JsonUtil.toJson(this.consume) + "]");
+      consume=null;
     }
     super.channelUnregistered(ctx);
+    ctx.close();
   }
 
   @Override

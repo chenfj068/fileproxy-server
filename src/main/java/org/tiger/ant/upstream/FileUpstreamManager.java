@@ -11,6 +11,7 @@ import org.tiger.ant.ServerConfig;
 import org.tiger.ant.client.FileConnection;
 import org.tiger.ant.file.FileManager;
 import org.tiger.ant.file.FileUpstream;
+import org.tiger.ant.util.FileStoreUtil;
 import org.tiger.ant.util.JsonUtil;
 
 public class FileUpstreamManager{
@@ -65,7 +66,7 @@ public class FileUpstreamManager{
           }
           if(fm.getType().equals(this.lastType)&&this.fileConnection!=null){
             try{
-            fileConnection.sendFile(fm.getType(), new File(fm.getPath()), true);
+            fileConnection.sendFile(fm.getType(), FileStoreUtil.getDistDir(fm.getPath(), fm.getType()),new File(fm.getPath()), true);
             fileManager.onFileUpstreamSuccess(fm);
             AntLogger.logger().debug("upstream fileupstream success["+JsonUtil.toJson(fm)+"]");
             }catch(IOException ioe){
@@ -92,7 +93,7 @@ public class FileUpstreamManager{
             String ss[] = this.lastHost.split(":");
             fileConnection=FileConnection.openConnection(ss[0], Integer.parseInt(ss[1]));
             try{
-            fileConnection.sendFile(fm.getType(), new File(fm.getPath()), true);
+            fileConnection.sendFile(fm.getType(), FileStoreUtil.getDistDir(fm.getPath(), fm.getType()),new File(fm.getPath()), true);
             fileManager.onFileUpstreamSuccess(fm);
             AntLogger.logger().debug("upstream fileupstream success["+JsonUtil.toJson(fm)+"]");
             }catch(IOException ioe){

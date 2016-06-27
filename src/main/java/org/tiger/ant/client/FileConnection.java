@@ -40,13 +40,13 @@ public class FileConnection {
     return _conn;
   }
 
-  public void sendFile(String type, File f, boolean withMd5) throws IOException,
+  public void sendFile(String type, String distdir,File f, boolean withMd5) throws IOException,
       InterruptedException {
     boolean ok = lock.tryLock(5000, TimeUnit.SECONDS);
     if (ok) {
       try {
         busy = true;
-        sendFile0(type, f, true);
+        sendFile0(type,distdir,f, true);
       } catch (IOException ioe) {
         this.socket.close();
         this.busy = false;
@@ -61,12 +61,12 @@ public class FileConnection {
   }
 
 
-  public void sendFile(String type, File f) throws IOException, InterruptedException {
+  public void sendFile(String type,String distdir, File f) throws IOException, InterruptedException {
     boolean ok = lock.tryLock(5000, TimeUnit.SECONDS);
     if (ok) {
       try {
         busy = true;
-        sendFile0(type, f, false);
+        sendFile0(type,distdir, f, false);
       } catch (IOException ioe) {
         this.socket.close();
         this.busy = false;
@@ -80,8 +80,9 @@ public class FileConnection {
     }
   }
 
-  private void sendFile0(String type, File f, boolean withMd5) throws IOException {
+  private void sendFile0(String type,String distdir, File f, boolean withMd5) throws IOException {
     FileMeta meta = new FileMeta();
+    meta.setDistDir(distdir);
     meta.setClient("");
     meta.setFileName(f.getName());
     meta.setFtype(type);

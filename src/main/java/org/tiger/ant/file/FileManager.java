@@ -20,7 +20,7 @@ public interface FileManager extends FileUpListener {
 
   public void onFirstTimeSub(Consumer consumer);
   
-  public Consumer getConsumerById(String consumerid);
+  public Consumer getConsumerById(String consumerid,String groupid,String type);
   
   public Consumer getConsumerSubInfo(String groupId,String consumerid,String type);
   

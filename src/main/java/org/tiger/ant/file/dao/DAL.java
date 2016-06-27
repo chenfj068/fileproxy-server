@@ -109,10 +109,12 @@ public class DAL {
     }
   }
 
-  public static Consumer queryConsumerByid(String consumerid) {
+  public static Consumer queryConsumerByid(String consumerid,String groupid,String type) {
     try (Connection conn = sql2o.open()) {
       Query query = conn.createQuery(SQL.SQL_SELECT_CONSUMER_BY_ID);
       query.addParameter("consumerid", consumerid);
+      query.addParameter("groupid", groupid);
+      query.addParameter("ftype", type);
       return query.executeAndFetchFirst(Consumer.class);
     }catch(Exception e){
       throw new RuntimeException(e);
@@ -121,7 +123,7 @@ public class DAL {
 
 
   public static void saveOrUpdateConsumer(Consumer consumer) {
-    if (queryConsumerByid(consumer.getConsumerId()) != null)
+    if (queryConsumerByid(consumer.getConsumerId(),consumer.getGroupId(),consumer.getFtype()) != null)
       return;
     try (Connection conn = sql2o.open()) {
       Query query = conn.createQuery(SQL.SQL_SAVE_CONSUMER);

@@ -209,10 +209,10 @@ public class FileManagerImpl implements FileManager {
   }
 
   @Override
-  public Consumer getConsumerById(String consumerid) {
+  public Consumer getConsumerById(String consumerid,String groupid,String type) {
     try {
       lock.lock();
-      return DAL.queryConsumerByid(consumerid);
+      return DAL.queryConsumerByid(consumerid,groupid,type);
     } finally {
       lock.unlock();
     }

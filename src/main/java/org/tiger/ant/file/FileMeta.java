@@ -3,6 +3,7 @@ package org.tiger.ant.file;
 public class FileMeta {
 
   private String fileName;
+  private String distDir="";
   private long length;
   private String ftype;
   private String client;
@@ -44,6 +45,12 @@ public class FileMeta {
   }
   public void setCheckSum(boolean checkSum) {
     this.checkSum = checkSum;
+  }
+  public String getDistDir() {
+    return distDir;
+  }
+  public void setDistDir(String distDir) {
+    this.distDir = distDir;
   }
   
   

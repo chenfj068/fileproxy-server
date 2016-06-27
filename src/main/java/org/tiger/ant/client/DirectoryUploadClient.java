@@ -21,7 +21,7 @@ public class DirectoryUploadClient {
       boolean succ = false;
       while (!succ) {
         try {
-          conn.sendFile(type, f);
+          conn.sendFile(type, "",f);
         } catch (Exception e) {
           System.out.println("conn error");
           Thread.sleep(5000);

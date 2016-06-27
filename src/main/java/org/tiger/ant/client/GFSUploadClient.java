@@ -16,17 +16,18 @@ public class GFSUploadClient {
     String dir = args[2];
     String ss[] = host.split(":");
     FileConnection conn = FileConnection.openConnection(ss[0], Integer.parseInt(ss[1]));
-    while(true){
+    while (true) {
       File _dir = new File(dir);
+      System.out.println("file upload begin");
       for (File f : _dir.listFiles()) {
-        if(f.isFile())
+        if (f.isFile())
           continue;
-        for(File _f:f.listFiles()){
+        for (File _f : f.listFiles()) {
           boolean succ = false;
           while (!succ) {
             try {
-              conn.sendFile(type, _f);
-              succ=true;
+              conn.sendFile(type,"", _f);
+              succ = true;
             } catch (Exception e) {
               System.out.println("conn error");
               Thread.sleep(5000);
@@ -34,10 +35,12 @@ public class GFSUploadClient {
             }
           }
         }
-        
+
       }
-      Thread.currentThread().sleep(60*1000);
+      System.out.println("file upload complete,sleep 1 hour");
+      Thread.currentThread().sleep(60 * 1000 * 3600);
     }
-    
+
+
   }
 }

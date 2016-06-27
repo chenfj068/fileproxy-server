@@ -17,8 +17,8 @@ static final String SQL_SELECT_FILEINFO_BY_UPTIME_LESS_THAN="select * from filei
 
 
 static final String SQL_SAVE_CONSUMER="insert into consumer(consumerid,groupid,regtime,lastuptime,ftype) values(:consumerid,:groupid,:regtime,:lastuptime,:ftype)";
-static final String SQL_UPDATE_CONSUMER="update consumer set groupid=:groupid,regtime=:regtime,lastuptime=:lastuptime where consumerid=:consumerid";
-static final String SQL_SELECT_CONSUMER_BY_ID="select * from consumer where consumerid=:consumerid";
+static final String SQL_UPDATE_CONSUMER="update consumer set groupid=:groupid,regtime=:regtime,lastuptime=:lastuptime where consumerid=:consumerid and groupid=:groupid and ftype=:ftype";
+static final String SQL_SELECT_CONSUMER_BY_ID="select * from consumer where consumerid=:consumerid and groupid=:groupid and ftype=:ftype";
 static final String SQL_SELECT_GROUPS="select distinct(groupid) from consumer";
 static final String SQL_SELECT_GROUP_BY_FTYPE="select distinct(groupid)  from consumer where ftype=:ftype";
 

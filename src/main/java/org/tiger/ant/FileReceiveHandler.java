@@ -10,6 +10,7 @@ import java.util.List;
 import org.tiger.ant.file.FileMeta;
 import org.tiger.ant.msg.FileTransEnd;
 import org.tiger.ant.msg.FileTransStart;
+import org.tiger.ant.util.FileStoreUtil;
 import org.tiger.ant.util.JsonUtil;
 
 import io.netty.buffer.ByteBuf;
@@ -88,10 +89,8 @@ public class FileReceiveHandler extends ChannelInboundHandlerAdapter {
     } else if (msg instanceof FileTransStart) {
       FileTransStart start = (FileTransStart) msg;
       this.meta = start.getFileMeta();
-      checkdir(this.meta.getFtype());
-      this.filePath =
-          this.workdir + File.separator + meta.getFtype() + File.separator + meta.getFileName();
-      this.tmpFilePath = filePath + "_" + System.currentTimeMillis() + ".tmp";
+      this.filePath =FileStoreUtil.getStorePath(workdir, meta);
+      this.tmpFilePath = FileStoreUtil.getTempFileStorePath(workdir, meta);
       this.fos = new FileOutputStream(this.tmpFilePath);
       this.fileBegin(meta);
       AntLogger.logger().debug("file receive begin ["+JsonUtil.toJson(this.meta)+"]");

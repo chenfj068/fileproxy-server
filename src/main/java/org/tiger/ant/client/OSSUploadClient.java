@@ -26,8 +26,8 @@ public class OSSUploadClient {
     String ss[]=host.split(":");
     config.setBrokerIp(ss[0]);
     config.setBrokerPort(Integer.parseInt(ss[1]));
-    config.setGroupId("group1");
-    config.setConsumerId("consumer1");
+    config.setGroupId("group-ec");
+    config.setConsumerId("consumer-ec");
     config.setMaxLocalCache(1);
     config.setTypes(new String[]{type});
     config.setWorkDir(workdir);
@@ -57,7 +57,10 @@ public class OSSUploadClient {
     public void onFileReceived(FileMeta meta, File file) {
         AntLogger.logger().info("file receive success "+file.getName());
         SimpleUploadServer sus = new SimpleUploadServer("SHANGHAI","store");
-        sus.upload("gfs/"+file.getName(), file);  
+        String type=meta.getFtype();
+        String distdir=meta.getDistDir();
+        String path=type+File.separator+distdir+File.separator+file.getName();
+        sus.upload(path, file);  
         file.delete();
         AntLogger.logger().info("file upload success "+file.getName());
       }

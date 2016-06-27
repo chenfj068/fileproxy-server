@@ -14,6 +14,7 @@ import org.tiger.ant.AntLogger;
 import org.tiger.ant.Constants;
 import org.tiger.ant.file.FileMeta;
 import org.tiger.ant.msg.FileFetchRequest;
+import org.tiger.ant.util.FileStoreUtil;
 import org.tiger.ant.util.JsonUtil;
 
 public class FileDownloadManager implements FileFetchListener {
@@ -38,7 +39,7 @@ public class FileDownloadManager implements FileFetchListener {
   @Override
   public void fileEnd(FileMeta m) {
     String path =
-        config.getWorkDir() + File.separator + m.getFtype() + File.separator + m.getFileName();
+        FileStoreUtil.getStorePath(config.getWorkDir(), m);
     boolean succ=false;
    for(int i=0;i<3;i++){
      try{

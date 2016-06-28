@@ -22,7 +22,7 @@ public class FileConnectionTest {
     int i=0;
     for (File f : files) {
       System.out.println("upload file:" + f.getName() + " begin");
-      conn.sendFile("nginx", f,i++%2==0);
+      conn.sendFile("nginx","rshard", f,i++%2==0);
       sendHeartBeat(conn, 2, 500);
       System.out.println("upload file:" + f.getName() + " end");
     }
@@ -70,7 +70,7 @@ public class FileConnectionTest {
         int i=0;
         for (File f : dir.listFiles()) {
           System.out.println("upload file :" + this.type + " " + f.getName() + " begin");
-          conn.sendFile(type, f,i%2==0);
+          conn.sendFile(type, "",f,i%2==0);
           sendHeartBeat(conn, 2, 500);
           System.out.println("upload file :" + this.type + " " + f.getName() + " end");
         }
@@ -82,4 +82,4 @@ public class FileConnectionTest {
     }
   }
 
-}
+ }

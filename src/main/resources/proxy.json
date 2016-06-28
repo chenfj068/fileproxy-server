@@ -2,16 +2,16 @@
    "upstream_servers":[
       {
          "group_name":"group1",
-         "servers":"127.0.0.1:9001"
+         "servers":"101.200.167.116:9000"
       }
    ],
    "proxy_list":[
       {
-         "type":"ngixnx",
+         "type":".+",
           "server_group":"group1"
       },
       {
-         "type":"type3,type4",
+         "type":"type3;type4",
          "server_group":"group1"
       }
    ],

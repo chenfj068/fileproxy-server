@@ -35,9 +35,12 @@ public class FileStoreUtil {
     return getTempFileStorePath(rootDir, meta, ".tmp");
   }
   
+  //{workdir}/type/{distdir(可以空)}/filename
   public static String getDistDir(String filepath,String type){
     File file = new File(filepath);
     String dir=file.getParentFile().getAbsolutePath();
+    if(dir.length()==dir.indexOf(type)+type.length())
+      return "";
     return dir.substring(dir.indexOf(type)+type.length()+1);
     
   }

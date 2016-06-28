@@ -18,7 +18,7 @@ public class ProxyConfig {
 
   private Map<String, String[]> upstream_servers;
   private Map<String, String[]> proxy_map;
-  private int up_stream_thread_num=10;
+  private int up_stream_thread_num = 10;
 
   private static ProxyConfig instance;
 
@@ -80,34 +80,43 @@ public class ProxyConfig {
       }
       config.proxy_map = typeMap;
     }
-    if(map.containsKey("upstream_thread_number")){
-      config.up_stream_thread_num=(int)map.get("upstream_thread_number");
+    if (map.containsKey("upstream_thread_number")) {
+      config.up_stream_thread_num = (int) map.get("upstream_thread_number");
     }
     return config;
   }
 
   public String[] getUpstreamServers(String type) {
-    return this.proxy_map.get(type);
+    for (String key : proxy_map.keySet()) {
+      if (type.matches(key))
+        return proxy_map.get(key);
+    }
+    return null;
+
   }
 
   public String[] getGroupServers(String group) {
     return this.upstream_servers.get(group);
   }
-  
-  public int getUpthreadNumber(){
+
+  public int getUpthreadNumber() {
     return this.up_stream_thread_num;
   }
 
-  public boolean matchProxy(String type){
-    return this.proxy_map.containsKey(type);
+  public boolean matchProxy(String type) {
+    return toBeUpstream(type);
   }
-  
-  public Set<String> getUpstreamTypes(){
+
+  public Set<String> getUpstreamTypes() {
     return proxy_map.keySet();
   }
-  
-  public boolean toBeUpstream(String type){
-    return proxy_map.containsKey(type);
+
+  public boolean toBeUpstream(String type) {
+    for (String key : proxy_map.keySet()) {
+      if (type.matches(key))
+        return true;
+    }
+    return false;
   }
- 
+
 }

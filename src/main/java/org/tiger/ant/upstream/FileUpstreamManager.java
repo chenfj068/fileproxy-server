@@ -96,7 +96,7 @@ public class FileUpstreamManager{
             fileConnection.sendFile(fm.getType(), FileStoreUtil.getDistDir(fm.getPath(), fm.getType()),new File(fm.getPath()), true);
             fileManager.onFileUpstreamSuccess(fm);
             AntLogger.logger().debug("upstream fileupstream success["+JsonUtil.toJson(fm)+"]");
-            }catch(IOException ioe){
+            }catch(Exception ioe){
               AntLogger.logger().error("upstream failed ["+fm.getPath()+"->"+lastHost+"]");
               fileConnection.close();
               fileConnection=null;

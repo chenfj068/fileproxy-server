@@ -71,11 +71,21 @@ File Reverse Proxy Server
 
 ```
 
-客户端文件上传
+JAVA客户端文件上传
 ---
 ```
  FileConnection conn = FileConnection.openConnection("127.0.0.1", 9000);
  conn.sendFile("testtype", "2016/06", new File("your file path"));
  conn.close()
+
+```
+Python客户端文件上传
+---
+```
+from  fileclient import FileClient
+client=FileClient("127.0.0.1",9000)
+client.connect()
+client.sendFile("/path/of/file","filetype","file/store/path")
+client.close()
 
 ```
